@@ -1,0 +1,6 @@
+# whatsapp search
+selenium
+chromedriver 
+
+pandas
+openpyxl  
