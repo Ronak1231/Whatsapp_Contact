@@ -1,9 +1,21 @@
-[5928:23944:0616/123049.908:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
-[14380:6932:0616/123050.082:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[11648:22284:0616/123050.152:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[19972:10188:0616/123050.244:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
-[3868:24104:0616/123050.601:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[15496:6756:0616/123050.688:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[5928:23944:0616/123050.948:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yt/r/Ey5QIp1RjTx.js (163)
-[14728:19224:0616/123051.233:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[6204:8528:0616/123250.166:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
+[2292:10996:0616/153452.184:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
+[24156:15316:0616/153452.439:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[5116:13932:0616/153452.572:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[24544:16144:0616/153452.633:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
+[21076:14876:0616/153453.093:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[1796:13520:0616/153453.295:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[2292:10996:0616/153453.423:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/ye/r/QUz9hdh6NWk.js (163)
+[4880:7848:0616/153453.841:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[2292:10996:0616/153509.335:INFO:CONSOLE:76] "ErrorUtils caught an error:
+
+Converting to a string will drop content data. Hash="undefined" Translation="{author} joined from the community" Content="{"key":null,"ref":null,"props":{"contact":{"id":"918074879491@c.us","type":"in","isContactSyncCompleted":1,"textStatusLastUpdateTime":-1,"syncToAddressbook":false},"showNotifyName":true,"elevatedPushNamesEnabled":true,"onClick":null}}" (type=object,Object)
+
+Subsequent non-fatal errors won't be logged; see https://fburl.com/debugjs. [object Object]", source: https://static.whatsapp.net/rsrc.php/v4/yq/r/yNVu2MwtLC-.js (76)
+[2292:10996:0616/153551.008:INFO:CONSOLE:76] "ErrorUtils caught an error:
+
+Converting to a string will drop content data. Hash="undefined" Translation="{author} joined from the community" Content="{"key":null,"ref":null,"props":{"contact":{"id":"918074879491@c.us","type":"in","isBusiness":false,"isEnterprise":false,"isSmb":false,"isContactSyncCompleted":1,"textStatusLastUpdateTime":-1,"syncToAddressbook":false},"showNotifyName":true,"elevatedP" (type=object,Object)
+
+Subsequent non-fatal errors won't be logged; see https://fburl.com/debugjs. [object Object]", source: https://static.whatsapp.net/rsrc.php/v4/yq/r/yNVu2MwtLC-.js (76)
+[17108:24056:0616/153652.538:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
+[2292:18148:0616/153753.314:ERROR:components\system_cpu\cpu_probe_win.cc:134] PdhGetFormattedCounterValue failed: Error (0x13D) while retrieving error. (0x800007D6)
+[2292:11200:0616/153753.314:ERROR:components\system_cpu\cpu_probe_win.cc:134] PdhGetFormattedCounterValue failed: Error (0x13D) while retrieving error. (0x800007D6)
