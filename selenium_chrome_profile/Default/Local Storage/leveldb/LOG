@@ -1,3 +1,5 @@
-2025/06/13-14:42:51.710 5e24 Reusing MANIFEST C:\Users\91982\Desktop\Python\Messages_Project\selenium_chrome_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2025/06/13-14:42:51.719 5e24 Recovering log #52
-2025/06/13-14:42:51.724 5e24 Reusing old log C:\Users\91982\Desktop\Python\Messages_Project\selenium_chrome_profile\Default\Local Storage\leveldb/000052.log 
+2025/06/16-12:08:02.130 4c4 Reusing MANIFEST C:\Users\91982\Desktop\Python\Messages_Project\selenium_chrome_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2025/06/16-12:08:02.134 4c4 Recovering log #56
+2025/06/16-12:08:02.135 4c4 Level-0 table #59: started
+2025/06/16-12:08:02.145 4c4 Level-0 table #59: 14991 bytes OK
+2025/06/16-12:08:02.156 4c4 Delete type=0 #56

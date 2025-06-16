@@ -120,19 +120,20 @@ while a:
                         break
                     last_height = new_height
 
-                member_elements = scroll_box.find_elements(By.XPATH, ".//div[@role='button' and @tabindex='0']")
+                member_elements = scroll_box.find_elements(By.XPATH, ".//div[contains(@class, '_ak8q')]")
                 print(f"🔢 Total members found (raw): {len(member_elements)}")
                 data = []
 
                 for idx, member in enumerate(member_elements, 1):
                     try:
-                        spans = member.find_elements(By.XPATH, ".//span[@dir='auto']")
-                        span_texts = [s.text.strip() for s in spans if s.text.strip()]
-                        print(f"👤 Member {idx}: {span_texts}")  # Debug print
-
                         name, number = "None", "None"
-                        for text in span_texts:
-                            if re.match(r"^\+\d+", text):  # Phone number
+
+                        # Get all text spans
+                        spans = member.find_elements(By.XPATH, ".//span[@dir='auto']")
+                        texts = [s.text.strip() for s in spans if s.text.strip()]
+
+                        for text in texts:
+                            if re.match(r"^\+\d{1,}", text):  # number format like +91
                                 number = text
                             elif text.lower() != "you":
                                 name = text
@@ -142,9 +143,11 @@ while a:
 
                         if name.lower() == "you" or name == "None":
                             continue
+
+                        print(f"👤 Member {idx}: {name} | {number}")
                         data.append({"Name": name, "Number": number})
                     except Exception as e:
-                        print(f"⚠️ Skipping member due to error: {e}")
+                        print(f"⚠️ Skipping member {idx} due to error: {e}")
 
                 if data:
                     df = pd.DataFrame(data).drop_duplicates()
