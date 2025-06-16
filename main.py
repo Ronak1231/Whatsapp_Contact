@@ -8,7 +8,7 @@ import pandas as pd
 import time
 import re
 
-# --- Utility ---
+# --- Utility Functions ---
 def clean_non_bmp(text):
     return ''.join(c if ord(c) <= 0xFFFF else '' for c in text)
 
@@ -20,6 +20,28 @@ def contin(text):
         driver.quit()
         print("🛑 Browser closed.")
         return False
+
+def scroll_until_end(container, pause_time=2, max_tries=30):
+    print("🔄 Scrolling through member list...")
+    last_len = 0
+    same_count = 0
+
+    for _ in range(max_tries):
+        member_elements = container.find_elements(By.XPATH, ".//div[contains(@class, '_ak8q')]")
+        current_len = len(member_elements)
+
+        if current_len == last_len:
+            same_count += 1
+            if same_count >= 3:  # Assume end reached after 3 same-length attempts
+                break
+        else:
+            same_count = 0
+            last_len = current_len
+
+        driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", container)
+        time.sleep(pause_time)
+    
+    return container.find_elements(By.XPATH, ".//div[contains(@class, '_ak8q')]")
 
 # --- Chrome Setup ---
 CHROMEDRIVER_PATH = r"C:\Users\91982\Desktop\Python\Messages_Project\chromedriver.exe"
@@ -46,8 +68,8 @@ while a:
         )
         search_input.clear()
         search_input.send_keys(search_term)
-
         time.sleep(2)
+
         results = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.XPATH, "//div[@role='listitem']"))
         )
@@ -111,29 +133,18 @@ while a:
                 )
                 WebDriverWait(driver, 5).until(EC.visibility_of(scroll_box))
 
-                last_height = driver.execute_script("return arguments[0].scrollHeight", scroll_box)
-                while True:
-                    driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", scroll_box)
-                    time.sleep(1)
-                    new_height = driver.execute_script("return arguments[0].scrollHeight", scroll_box)
-                    if new_height == last_height:
-                        break
-                    last_height = new_height
-
-                member_elements = scroll_box.find_elements(By.XPATH, ".//div[contains(@class, '_ak8q')]")
-                print(f"🔢 Total members found (raw): {len(member_elements)}")
+                member_elements = scroll_until_end(scroll_box)
+                print(f"🔢 Total members found: {len(member_elements)}")
                 data = []
 
                 for idx, member in enumerate(member_elements, 1):
                     try:
                         name, number = "None", "None"
-
-                        # Get all text spans
                         spans = member.find_elements(By.XPATH, ".//span[@dir='auto']")
                         texts = [s.text.strip() for s in spans if s.text.strip()]
 
                         for text in texts:
-                            if re.match(r"^\+\d{1,}", text):  # number format like +91
+                            if re.match(r"^\+\d{1,}", text):
                                 number = text
                             elif text.lower() != "you":
                                 name = text

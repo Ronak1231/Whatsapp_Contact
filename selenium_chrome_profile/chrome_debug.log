@@ -1,13 +1,9 @@
-[22684:19424:0616/120801.914:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
-[17112:22176:0616/120802.072:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[24468:6284:0616/120802.149:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[17812:13324:0616/120802.224:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
-[24108:6756:0616/120802.496:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[20680:7912:0616/120802.566:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[22684:19424:0616/120802.833:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yt/r/Ey5QIp1RjTx.js (163)
-[13724:20804:0616/120802.896:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[14448:20648:0616/120809.878:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[22684:19424:0616/120810.847:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yt/r/Ey5QIp1RjTx.js (163)
-[22684:19424:0616/120811.179:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yt/r/Ey5QIp1RjTx.js (163)
-[22684:16448:0616/120931.978:INFO:rlz\lib\rlz_lib.cc:442] Attempting to send RLZ ping brand=CHBF
-[22684:16448:0616/120932.265:INFO:rlz\lib\rlz_lib.cc:451] Succeeded in sending RLZ ping
+[5928:23944:0616/123049.908:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
+[14380:6932:0616/123050.082:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[11648:22284:0616/123050.152:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[19972:10188:0616/123050.244:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
+[3868:24104:0616/123050.601:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[15496:6756:0616/123050.688:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[5928:23944:0616/123050.948:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yt/r/Ey5QIp1RjTx.js (163)
+[14728:19224:0616/123051.233:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[6204:8528:0616/123250.166:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
