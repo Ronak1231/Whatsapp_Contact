@@ -9,6 +9,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, StaleElementReferenceException
+from webdriver_manager.chrome import ChromeDriverManager
 
 # --- Setup ---
 CHROMEDRIVER_PATH = r"C:\Users\91982\Desktop\Python\Messages_Project\chromedriver.exe"
@@ -87,43 +89,69 @@ def extract_members(driver, group_name):
         EC.presence_of_element_located((By.XPATH, scroll_box_xpath))
     )
 
-    last_height = driver.execute_script("return arguments[0].scrollHeight", scroll_box)
-    while True:
-        driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", scroll_box)
-        time.sleep(1)
-        new_height = driver.execute_script("return arguments[0].scrollHeight", scroll_box)
-        if new_height == last_height:
-            break
-        last_height = new_height
-
-    member_elements = scroll_box.find_elements(By.XPATH, ".//div[contains(@class, '_ak72')]")
     data = []
-    for member in member_elements:
-        try:
-            name = "None"
-            number = "None"
+    while True:
+        member_elements = scroll_box.find_elements(By.XPATH, ".//div[contains(@class, '_ak72')]")
+        if not member_elements:
+            break
 
-            name_elements = member.find_elements(By.XPATH, ".//span[@dir='auto']")
-            for el in name_elements:
-                text = el.text.strip()
-                if text and text.lower() != "you" and not re.match(r"^\+\d{1,}", text):
-                    name = clean_non_bmp(text)
-                    break
+        for member in member_elements:
+            try:
+                # Click on the member to open contact info
+                driver.execute_script("arguments[0].click();", member)
+                time.sleep(1)  # Wait for the contact info to load
 
-            number_elements = member.find_elements(By.XPATH, ".//div[@role='gridcell' and @aria-colindex='1']//span")
-            for el in number_elements:
-                text = el.text.strip()
-                if re.match(r"^\+\d{1,}", text):
-                    number = clean_non_bmp(text)
-                    break
+                # Extract name
+                name_elements = WebDriverWait(driver, 10).until(
+                    EC.presence_of_all_elements_located((By.XPATH, "//span[@dir='auto']"))
+                )
+                name = "None"
+                for el in name_elements:
+                    text = el.text.strip()
+                    if text and text.lower() != "you":
+                        name = clean_non_bmp(text)
+                        break
 
-            if name == "None" and number != "None":
-                name = number
+                # Extract number
+                number_elements = driver.find_elements(By.XPATH, "//div[@role='gridcell' and @aria-colindex='1']//span")
+                number = "None"
+                for el in number_elements:
+                    text = el.text.strip()
+                    if re.match(r"^\+\d{1,}", text):
+                        number = clean_non_bmp(text)
+                        break
 
-            if name.lower() != "you" and (name != "None" or number != "None"):
-                data.append({"Name": name, "Number": number})
-        except:
-            continue
+                # Extract status
+                status_elements = driver.find_elements(By.XPATH, "//span[@class='x13faqbe _ao3e selectable-text copyable-text']")
+                status = "None"
+                if status_elements:
+                    status = clean_non_bmp(status_elements[0].text.strip())
+
+                # Add extracted data to the list
+                if name != "None" or number != "None":
+                    data.append({"Name": name, "Number": number, "Status": status})
+
+                # Go back to the group info
+                back_button = WebDriverWait(driver, 10).until(
+                    EC.element_to_be_clickable((By.XPATH, "//header//div[@role='button']"))
+                )
+                back_button.click()
+                time.sleep(1)  # Wait for the group info to load again
+
+            except StaleElementReferenceException:
+                st.warning("Stale element reference encountered. Retrying...")
+                member_elements = scroll_box.find_elements(By.XPATH, ".//div[contains(@class, '_ak72')]")
+                continue
+            except Exception as e:
+                st.warning(f"Error extracting member data: {e}")
+                continue
+
+        # Scroll down by 7 members
+        driver.execute_script("arguments[0].scrollTop += 50;", scroll_box)  # Adjust scroll amount as needed
+        time.sleep(0.5)
+
+    # Add your name to the list
+    data.append({"Name": "Ronak Bansal", "Number": "Your Number Here", "Status": "Your Status Here"})
 
     return pd.DataFrame(data).drop_duplicates()
 
@@ -151,8 +179,9 @@ if st.button("🚀 Extract Members") and group_name:
             st.download_button(
                 label="📥 Download as Excel",
                 data=excel_buffer.getvalue(),
-                file_name=f"{group_name}_members.xlsx",
+                file_name=f"{group_name} members.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
         else:
             st.error("❌ No members extracted or group not found.")
+

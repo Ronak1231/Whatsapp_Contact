@@ -1,13 +1,14 @@
-[16464:14812:0617/101025.325:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
-[19812:20944:0617/101025.476:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[22620:17876:0617/101025.543:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[21828:19248:0617/101025.654:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
-[2536:7492:0617/101025.986:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[15888:3836:0617/101026.093:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[16464:14812:0617/101026.327:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yV/r/B1ctacenJz7.js (163)
-[24120:21956:0617/101026.437:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[16464:14812:0617/101036.528:INFO:CONSOLE:76] "ErrorUtils caught an error:
+[18300:16936:0617/120456.389:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
+[17132:13404:0617/120456.580:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[23584:16576:0617/120456.646:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[18588:18836:0617/120456.738:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
+[4984:21000:0617/120457.054:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[23932:2044:0617/120457.115:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[18300:16936:0617/120457.452:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yV/r/B1ctacenJz7.js (163)
+[19908:7172:0617/120457.784:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[18300:16936:0617/120520.608:INFO:CONSOLE:76] "ErrorUtils caught an error:
 
-Converting to a string will drop content data. Hash="undefined" Translation="{author} joined from the community" Content="{"key":null,"ref":null,"props":{"contact":{"id":"919676590599@c.us","pushname":"Kola Hanush","type":"in","isContactSyncCompleted":0,"textStatusLastUpdateTime":-1,"syncToAddressbook":false},"showNotifyName":true,"elevatedPushNamesEnabled":true,"onClic" (type=object,Object)
+Converting to a string will drop content data. Hash="undefined" Translation="{author} joined from the community" Content="{"key":null,"ref":null,"props":{"contact":{"id":"918454829758@c.us","type":"in","isContactSyncCompleted":1,"textStatusLastUpdateTime":-1,"syncToAddressbook":false},"showNotifyName":true,"elevatedPushNamesEnabled":true,"onClick":null}}" (type=object,Object)
 
 Subsequent non-fatal errors won't be logged; see https://fburl.com/debugjs. [object Object]", source: https://static.whatsapp.net/rsrc.php/v4/yE/r/tXKjlo8aug5.js (76)
+[13348:13032:0617/120656.660:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
