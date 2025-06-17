@@ -1,3 +1,5 @@
+# Terminal based code for search (first 10 groups)
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -29,16 +31,16 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 service = Service(CHROMEDRIVER_PATH)
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
+# --- Open WhatsApp ---
+driver.get("https://web.whatsapp.com/")
+print("🔄 Waiting for WhatsApp Web to load...")
+WebDriverWait(driver, 30).until(
+    EC.presence_of_element_located((By.CSS_SELECTOR, "canvas[aria-label='Scan me!'], div[role='textbox']"))
+)
+print("✅ WhatsApp Web loaded.")
 
 a = True
 while a:
-    # --- Open WhatsApp ---
-    driver.get("https://web.whatsapp.com/")
-    print("🔄 Waiting for WhatsApp Web to load...")
-    WebDriverWait(driver, 30).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "canvas[aria-label='Scan me!'], div[role='textbox']"))
-    )
-    print("✅ WhatsApp Web loaded.")
     search_term = input("🔎 Enter a name to search (group/contact): ")
     try:
         search_input = WebDriverWait(driver, 10).until(
@@ -148,7 +150,7 @@ while a:
                         if name == "None" and number != "None":
                             name = number  # fallback if no name
 
-                        if name.lower() == "you" or (name == "None" and number == "None"):
+                        if name.lowwer() == "you" or (name == "None" and number == "None"):
                             continue
 
                         print(f"👤 Member {idx}: {name} | {number}")

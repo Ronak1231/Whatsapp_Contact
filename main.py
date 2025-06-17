@@ -26,34 +26,6 @@ def start_browser():
 def clean_non_bmp(text):
     return ''.join(c if ord(c) <= 0xFFFF else '' for c in text)
 
-def get_group_suggestions(driver, partial_name):
-    driver.get("https://web.whatsapp.com/")
-    WebDriverWait(driver, 30).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "canvas[aria-label='Scan me!'], div[role='textbox']"))
-    )
-
-    search_input = WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Search input textbox' and @contenteditable='true']"))
-    )
-    search_input.clear()
-    search_input.send_keys(partial_name)
-    time.sleep(2)
-
-    results = WebDriverWait(driver, 10).until(
-        EC.presence_of_all_elements_located((By.XPATH, "//div[@role='listitem']"))
-    )
-
-    group_options = []
-    for result in results:
-        try:
-            result_title = result.find_element(By.XPATH, ".//span[@dir='auto']").text.strip()
-            if result_title:
-                group_options.append(result_title)
-        except:
-            continue
-
-    return list(set(group_options))
-
 def extract_members(driver, group_name):
     st.info("Opening WhatsApp Web and waiting for load...")
     driver.get("https://web.whatsapp.com/")
@@ -61,6 +33,7 @@ def extract_members(driver, group_name):
         EC.presence_of_element_located((By.CSS_SELECTOR, "canvas[aria-label='Scan me!'], div[role='textbox']"))
     )
 
+    # Search group
     search_input = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Search input textbox' and @contenteditable='true']"))
     )
@@ -76,7 +49,7 @@ def extract_members(driver, group_name):
     for result in results:
         try:
             result_title = result.find_element(By.XPATH, ".//span[@dir='auto']").text.strip()
-            if group_name.lower() == result_title.lower():
+            if group_name.lower() in result_title.lower():
                 result.click()
                 group_found = True
                 break
@@ -108,6 +81,7 @@ def extract_members(driver, group_name):
         st.warning("Could not open members list.")
         return None
 
+    # Scroll through members
     scroll_box_xpath = "//div[@aria-label='Group info']//div[@role='list']"
     scroll_box = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, scroll_box_xpath))
@@ -161,32 +135,24 @@ with st.expander("ℹ️ Instructions", expanded=True):
     st.markdown("""
         - Make sure you're **logged in to WhatsApp Web** on Chrome with the same profile path.
         - This app opens Chrome and loads your profile to access WhatsApp group info.
-        - Type part of the group name to see suggestions and select one to extract members.
+        - Group names must match or partially match.
     """)
 
-partial_group_name = st.text_input("🔍 Type part of WhatsApp Group Name")
-driver = None
-if partial_group_name and st.button("🔎 Search Groups"):
-    with st.spinner("Searching groups..."):
+group_name = st.text_input("🔍 Enter WhatsApp Group Name")
+if st.button("🚀 Extract Members") and group_name:
+    with st.spinner("Launching browser and extracting data..."):
         driver = start_browser()
-        group_options = get_group_suggestions(driver, partial_group_name)
-        if group_options:
-            selected_group = st.selectbox("Select a group to extract members:", group_options)
-            if st.button("🚀 Extract Members"):
-                with st.spinner("Extracting members..."):
-                    df = extract_members(driver, selected_group)
-                    if df is not None and not df.empty:
-                        st.success("✅ Member list extracted!")
-                        st.dataframe(df)
-                        excel_buffer = io.BytesIO()
-                        df.to_excel(excel_buffer, index=False)
-                        st.download_button(
-                            label="📥 Download as Excel",
-                            data=excel_buffer.getvalue(),
-                            file_name=f"{selected_group}_members.xlsx",
-                            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        )
-                    else:
-                        st.error("❌ No members extracted or group not found.")
+        df = extract_members(driver, group_name)
+        if df is not None and not df.empty:
+            st.success("✅ Member list extracted!")
+            st.dataframe(df)
+            excel_buffer = io.BytesIO()
+            df.to_excel(excel_buffer, index=False)
+            st.download_button(
+                label="📥 Download as Excel",
+                data=excel_buffer.getvalue(),
+                file_name=f"{group_name}_members.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
         else:
-            st.error("❌ No matching groups found.")
+            st.error("❌ No members extracted or group not found.")

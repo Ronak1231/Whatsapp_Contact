@@ -1,4 +1,6 @@
 # whatsapp search
+streamlit
+
 selenium
 chromedriver 
 

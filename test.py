@@ -1,153 +1,160 @@
+# With streamlit UI updated till 17 june morning
+
+import streamlit as st
+import pandas as pd
+import time
+import re
+import io
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import pandas as pd
-import time
 
-# --- Utility ---
+# --- Setup ---
+CHROMEDRIVER_PATH = r"C:\Users\91982\Desktop\Python\Messages_Project\chromedriver.exe"
+PROFILE_PATH = r"C:\Users\91982\Desktop\Python\Messages_Project\selenium_chrome_profile"
+
+@st.cache_resource(show_spinner=False)
+def start_browser():
+    chrome_options = Options()
+    chrome_options.add_argument(f"user-data-dir={PROFILE_PATH}")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    service = Service(CHROMEDRIVER_PATH)
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+    return driver
+
 def clean_non_bmp(text):
     return ''.join(c if ord(c) <= 0xFFFF else '' for c in text)
 
-def contin(text):
-    if text.strip().lower() == "yes":
-        print("🟢 Browser will remain open.")
-        return True
-    elif text.strip().lower() == "no":
-        driver.quit()
-        print("🛑 Browser closed.")
-        return False
+def extract_members(driver, group_name):
+    st.info("Opening WhatsApp Web and waiting for load...")
+    driver.get("https://web.whatsapp.com/")
+    WebDriverWait(driver, 30).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "canvas[aria-label='Scan me!'], div[role='textbox']"))
+    )
 
-# --- Chrome Setup ---
-CHROMEDRIVER_PATH = r"C:\Users\91982\Desktop\Python\Messages_Project\chromedriver.exe"
-chrome_options = Options()
-chrome_options.add_argument(r"user-data-dir=C:\Users\91982\Desktop\Python\Messages_Project\selenium_chrome_profile")
-chrome_options.add_argument("--disable-dev-shm-usage")
-service = Service(CHROMEDRIVER_PATH)
-driver = webdriver.Chrome(service=service, options=chrome_options)
+    # Search group
+    search_input = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Search input textbox' and @contenteditable='true']"))
+    )
+    search_input.clear()
+    search_input.send_keys(group_name)
+    time.sleep(2)
 
-# --- Open WhatsApp ---
-driver.get("https://web.whatsapp.com/")
-print("🔄 Waiting for WhatsApp Web to load...")
-WebDriverWait(driver, 60).until(
-    EC.presence_of_element_located((By.CSS_SELECTOR, "canvas[aria-label='Scan me!'], div[role='textbox']"))
-)
-print("✅ WhatsApp Web loaded.")
+    results = WebDriverWait(driver, 10).until(
+        EC.presence_of_all_elements_located((By.XPATH, "//div[@role='listitem']"))
+    )
 
-while True:
-    search_term = input("🔎 Enter a name to search (group/contact): ")
+    group_found = False
+    for result in results:
+        try:
+            result_title = result.find_element(By.XPATH, ".//span[@dir='auto']").text.strip()
+            if group_name.lower() in result_title.lower():
+                result.click()
+                group_found = True
+                break
+        except:
+            continue
+
+    if not group_found:
+        st.error("Group not found. Try again.")
+        return None
+
+    time.sleep(1)
     try:
-        # Search for contact
-        search_input = WebDriverWait(driver, 30).until(
-            EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Search input textbox' and @contenteditable='true']"))
+        chat_header = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//header//div[@role='button']"))
         )
-        search_input.click()
-        search_input.clear()
-        search_input.send_keys(search_term)
-        time.sleep(2)
+        chat_header.click()
+    except:
+        st.warning("Could not open profile panel.")
+        return None
 
-        # Get search results
-        results = WebDriverWait(driver, 30).until(
-            EC.presence_of_all_elements_located((By.XPATH, "//div[@role='listitem']"))
+    try:
+        members_container = WebDriverWait(driver, 7).until(
+            EC.element_to_be_clickable((By.XPATH,
+                "//div[contains(@class, 'x12lumcd') and .//div[contains(text(), 'members')]]"
+            ))
         )
-        chat_options = []
-        print(f"\n🔍 Found {len(results)} result(s):")
-        for idx, item in enumerate(results):
-            try:
-                title_element = item.find_element(By.XPATH, ".//span[@dir='auto']")
-                title = title_element.text.strip()
-                chat_options.append((title, item))
-                print(f"{idx + 1}. {title}")
-            except:
-                continue
+        members_container.click()
+    except:
+        st.warning("Could not open members list.")
+        return None
 
-        if not chat_options:
-            print("❌ No matching chats found.")
+    # Scroll through members
+    scroll_box_xpath = "//div[@aria-label='Group info']//div[@role='list']"
+    scroll_box = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, scroll_box_xpath))
+    )
+
+    last_height = driver.execute_script("return arguments[0].scrollHeight", scroll_box)
+    while True:
+        driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", scroll_box)
+        time.sleep(1)
+        new_height = driver.execute_script("return arguments[0].scrollHeight", scroll_box)
+        if new_height == last_height:
+            break
+        last_height = new_height
+
+    member_elements = scroll_box.find_elements(By.XPATH, ".//div[contains(@class, '_ak72')]")
+    data = []
+    for member in member_elements:
+        try:
+            name = "None"
+            number = "None"
+
+            name_elements = member.find_elements(By.XPATH, ".//span[@dir='auto']")
+            for el in name_elements:
+                text = el.text.strip()
+                if text and text.lower() != "you" and not re.match(r"^\+\d{1,}", text):
+                    name = clean_non_bmp(text)
+                    break
+
+            number_elements = member.find_elements(By.XPATH, ".//div[@role='gridcell' and @aria-colindex='1']//span")
+            for el in number_elements:
+                text = el.text.strip()
+                if re.match(r"^\+\d{1,}", text):
+                    number = clean_non_bmp(text)
+                    break
+
+            if name == "None" and number != "None":
+                name = number
+
+            if name.lower() != "you" and (name != "None" or number != "None"):
+                data.append({"Name": name, "Number": number})
+        except:
+            continue
+
+    return pd.DataFrame(data).drop_duplicates()
+
+# --- Streamlit UI ---
+st.set_page_config(page_title="WhatsApp Group Member Extractor", layout="centered")
+st.title("📥 WhatsApp Group Member Extractor")
+
+with st.expander("ℹ️ Instructions", expanded=True):
+    st.markdown("""
+        - Make sure you're **logged in to WhatsApp Web** on Chrome with the same profile path.
+        - This app opens Chrome and loads your profile to access WhatsApp group info.
+        - Group names must match or partially match.
+    """)
+
+group_name = st.text_input("🔍 Enter WhatsApp Group Name")
+if st.button("🚀 Extract Members") and group_name:
+    with st.spinner("Launching browser and extracting data..."):
+        driver = start_browser()
+        df = extract_members(driver, group_name)
+        if df is not None and not df.empty:
+            st.success("✅ Member list extracted!")
+            st.dataframe(df)
+            excel_buffer = io.BytesIO()
+            df.to_excel(excel_buffer, index=False)
+            st.download_button(
+                label="📥 Download as Excel",
+                data=excel_buffer.getvalue(),
+                file_name=f"{group_name}_members.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
         else:
-            choice = int(input("\n🟢 Enter the number of the chat to open: ")) - 1
-            if 0 <= choice < len(chat_options):
-                selected_title, selected_element = chat_options[choice]
-                selected_element.click()
-                print(f"✅ Opened chat: {selected_title}")
-                time.sleep(3)
-
-                # --- Click Profile Info Header ---
-                try:
-                    chat_header = WebDriverWait(driver, 15).until(
-                        EC.element_to_be_clickable((By.XPATH, "//header//div[@role='button']"))
-                    )
-                    chat_header.click()
-                    print("👤 Profile info panel opened.")
-                    time.sleep(3)
-                except Exception as e:
-                    print("⚠️ Could not open profile panel:", e)
-
-                # --- Click on Group Members container ---
-                try:
-                    members_container = WebDriverWait(driver, 10).until(
-                        EC.element_to_be_clickable((By.XPATH,
-                            "//div[contains(@class, 'x12lumcd') and .//div[contains(text(), 'members')]]"
-                        ))
-                    )
-                    members_container.click()
-                    print("👥 Group members container clicked and list opened.")
-                    time.sleep(3)
-                except Exception as e:
-                    print("⚠️ Could not open group members list:", e)
-
-                # --- Extract Group Members ---
-                try:
-                    print("⏳ Extracting group member names and numbers...")
-
-                    # Wait for member elements to load
-                    member_elements = WebDriverWait(driver, 20).until(
-                        EC.presence_of_all_elements_located((By.XPATH,
-                            "//div[@role='button' and @tabindex='0' and descendant::span[@dir='auto']]"
-                        ))
-                    )
-
-                    data = []
-                    for member in member_elements:
-                        try:
-                            # Get all span texts with dir='auto' or 'ltr' inside the member element
-                            spans = member.find_elements(By.XPATH, ".//span[@dir='auto' or @dir='ltr']")
-                            texts = [s.text.strip() for s in spans if s.text.strip() != ""]
-
-                            # Skip invalid entries (like "You" or date headers) or if too many texts found
-                            if not texts or any(x.lower() == 'you' for x in texts) or len(texts) > 2:
-                                continue
-
-                            if len(texts) == 2:
-                                name, number = texts[0], texts[1]
-                            elif len(texts) == 1:
-                                name = texts[0]
-                                number = "N/A"
-                            else:
-                                continue
-
-                            name = clean_non_bmp(name)
-                            data.append({"Name": name, "Number": number})
-
-                        except Exception as e:
-                            print("⚠️ Skipping a member due to error:", e)
-
-                    if data:
-                        df = pd.DataFrame(data)
-                        filename = f"group_members_{search_term.replace(' ', '_')}.xlsx"
-                        df.drop_duplicates(inplace=True)
-                        df.to_excel(filename, index=False)
-                        print(f"✅ Saved member list to '{filename}'")
-                    else:
-                        print("❌ No valid members extracted.")
-
-                except Exception as e:
-                    print("❌ Error extracting members:", e)
-
-                cont = input("🔚 Press Enter to close the browser or type 'yes' to keep it open: ")
-                contin(cont)
-            else:
-                print("❌ Invalid selection.")
-    except Exception as e:
-        print("❌ Error:", e)
+            st.error("❌ No members extracted or group not found.")
