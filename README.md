@@ -107,7 +107,12 @@ python text_reply_python/main.py
 
 ## 📸 Screenshots
 
-> *(Insert screenshots of login page, extraction interface, and chatbot CLI here)*
+![image](https://github.com/user-attachments/assets/6a7ce7da-67ee-49e0-bf1f-4fa1b23fb2fd)
+
+---
+
+![image](https://github.com/user-attachments/assets/14eadbd4-16ed-49fa-8b75-fa65919a8876)
+
 
 ---
 
