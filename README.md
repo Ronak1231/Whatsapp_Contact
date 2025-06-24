@@ -128,7 +128,7 @@ python text_reply_python/main.py
 
 ## 📝 License
 
-[MIT License](https://github.com/Ronak1231/LICENSE)
+[MIT License](https://github.com/Ronak1231/LICENSE/)
 
 ---
 
