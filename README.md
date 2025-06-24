@@ -1,5 +1,5 @@
 
-# 📲 WhatsApp Group Contact Extractor & ChatBot Responder
+<h1 align="center">📲 WhatsApp Group Contact Extractor & ChatBot Responder</h1>
 
 Welcome to the **WhatsApp Contact Extractor & ChatBot Responder**, a dual-purpose automation tool built using **Selenium**, **Streamlit**, and **Google's Gemini API** to:
 
