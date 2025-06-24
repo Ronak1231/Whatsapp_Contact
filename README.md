@@ -7,7 +7,6 @@ Welcome to the **WhatsApp Contact Extractor & ChatBot Responder**, a dual-purpos
 2. 🤖 **Auto-generate Smart Replies** using chat history and Gemini AI
 
 ---
-
 <h2 align="center">🧰 Technologies Used </h2>
 <div align="center">
 
