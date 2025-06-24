@@ -1,32 +1,19 @@
-[20340:11112:0624/171125.653:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
-[7300:19872:0624/171125.891:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[15144:7236:0624/171125.963:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[6968:16800:0624/171126.047:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
-[1212:3516:0624/171126.590:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[19632:20116:0624/171126.730:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[20340:11112:0624/171126.948:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yi/r/kp9eKXxuIWp.js (163)
-[15584:11788:0624/171127.114:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[20340:11112:0624/171140.660:INFO:CONSOLE:76] "ErrorUtils caught an error:
+[10120:7784:0624/174651.597:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
+[16924:9052:0624/174651.769:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[8436:8588:0624/174651.774:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[13900:23520:0624/174651.924:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
+[14636:13872:0624/174652.224:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[14020:11300:0624/174652.268:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[10120:7784:0624/174652.619:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yi/r/kp9eKXxuIWp.js (163)
+[18428:1136:0624/174652.769:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[10120:7784:0624/174702.201:INFO:CONSOLE:76] "ErrorUtils caught an error:
 
 Converting to a string will drop content data. Hash="undefined" Translation="{user_name} added {names}" Content="{"key":null,"ref":null,"props":{"contact":{"id":"917708821165@c.us","type":"in","textStatusLastUpdateTime":-1,"syncToAddressbook":false},"showNotifyName":true,"elevatedPushNamesEnabled":true,"onClick":null}}" (type=object,Object)
 
 Subsequent non-fatal errors won't be logged; see https://fburl.com/debugjs. [object Object]", source: https://static.whatsapp.net/rsrc.php/v4/yu/r/R6-Uxg_mUAY.js (76)
-[20340:11112:0624/171210.702:WARNING:chrome\browser\performance_manager\policies\page_discarding_helper.cc:137] Discarding multiple pages with target (kb): 0, discard_protected_tabs: 0
-[20340:11112:0624/171235.993:INFO:CONSOLE:76] "ErrorUtils caught an error:
+[10120:7784:0624/174733.959:INFO:CONSOLE:76] "ErrorUtils caught an error:
 
 Converting to a string will drop content data. Hash="undefined" Translation="{user_name} added {names}" Content="{"key":null,"ref":null,"props":{"contact":{"id":"917708821165@c.us","type":"in","textStatusLastUpdateTime":-1,"syncToAddressbook":false},"showNotifyName":true,"elevatedPushNamesEnabled":true,"onClick":null}}" (type=object,Object)
 
 Subsequent non-fatal errors won't be logged; see https://fburl.com/debugjs. [object Object]", source: https://static.whatsapp.net/rsrc.php/v4/yu/r/R6-Uxg_mUAY.js (76)
-[20340:11112:0624/171305.548:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yi/r/kp9eKXxuIWp.js (163)
-[20056:2668:0624/171328.409:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
-[20340:11112:0624/171328.547:INFO:CONSOLE:76] "ErrorUtils caught an error:
-
-Converting to a string will drop content data. Hash="undefined" Translation="{user_name} added {names}" Content="{"key":null,"ref":null,"props":{"contact":{"id":"917708821165@c.us","type":"in","textStatusLastUpdateTime":-1,"syncToAddressbook":false},"showNotifyName":true,"elevatedPushNamesEnabled":true,"onClick":null}}" (type=object,Object)
-
-Subsequent non-fatal errors won't be logged; see https://fburl.com/debugjs. [object Object]", source: https://static.whatsapp.net/rsrc.php/v4/yu/r/R6-Uxg_mUAY.js (76)
-[16300:17900:0624/171345.995:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[20340:11112:0624/171355.933:INFO:CONSOLE:76] "ErrorUtils caught an error:
-
-Converting to a string will drop content data. Hash="undefined" Translation="{user_name} added {names}" Content="{"key":null,"ref":null,"props":{"contact":{"id":"917708821165@c.us","type":"in","textStatusLastUpdateTime":-1,"syncToAddressbook":false},"showNotifyName":true,"elevatedPushNamesEnabled":true,"onClick":null}}" (type=object,Object)
-
-Subsequent non-fatal errors won't be logged; see https://fburl.com/debugjs. [object Object]", source: https://static.whatsapp.net/rsrc.php/v4/yu/r/R6-Uxg_mUAY.js (76)
+[14308:11756:0624/174851.864:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
