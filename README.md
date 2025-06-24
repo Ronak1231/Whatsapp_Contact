@@ -9,17 +9,28 @@ Welcome to the **WhatsApp Contact Extractor & ChatBot Responder**, a dual-purpos
 ---
 
 ## 🧰 Technologies Used
+<div align="center">
 
-| Tool          | Purpose                                 |
-|---------------|------------------------------------------|
-| Selenium      | Automate WhatsApp Web in Chrome         |
-| Streamlit     | Web Interface for extracting contacts   |
-| Gemini API    | AI-based smart replies to recent chats  |
-| Pandas        | Data handling and export                |
-| ChromeDriver  | Browser automation                      |
-| SQLite        | User login and registration database    |
-| SQLAlchemy    | ORM for user model                      |
-| Werkzeug      | Secure password hashing                 |
+<table>
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Selenium</td><td>Automate WhatsApp Web in Chrome</td></tr>
+    <tr><td>Streamlit</td><td>Web Interface for extracting contacts</td></tr>
+    <tr><td>Gemini API</td><td>AI-based smart replies to recent chats</td></tr>
+    <tr><td>Pandas</td><td>Data handling and export</td></tr>
+    <tr><td>ChromeDriver</td><td>Browser automation</td></tr>
+    <tr><td>SQLite</td><td>User login and registration database</td></tr>
+    <tr><td>SQLAlchemy</td><td>ORM for user model</td></tr>
+    <tr><td>Werkzeug</td><td>Secure password hashing</td></tr>
+  </tbody>
+</table>
+
+</div>
 
 ---
 
