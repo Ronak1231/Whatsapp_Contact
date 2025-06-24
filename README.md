@@ -17,6 +17,9 @@ Welcome to the **WhatsApp Contact Extractor & ChatBot Responder**, a dual-purpos
 | Gemini API    | AI-based smart replies to recent chats  |
 | Pandas        | Data handling and export                |
 | ChromeDriver  | Browser automation                      |
+| SQLite        | User login and registration database    |
+| SQLAlchemy    | ORM for user model                      |
+| Werkzeug      | Secure password hashing                 |
 
 ---
 
@@ -44,6 +47,7 @@ Whatsapp_Contact/
 ├── chromedriver.exe                 # Required for Selenium browser automation
 ├── main.py                          # Streamlit app for member extraction
 ├── requirements.txt                 # Python dependencies
+└── users.db                         # SQLite database for storing user login information
 └── README.md                        # Project documentation
 ```
 
@@ -56,6 +60,11 @@ Whatsapp_Contact/
 - Searches for group and extracts members' phone numbers.
 - Exports the list to Excel (`.xlsx`).
 - Fully interactive interface with search and feedback.
+
+### 🔐 Login & Registration System
+- Secure login and registration using **Streamlit**, **SQLite**, and **Werkzeug**.
+- Passwords are securely hashed.
+- Prevents unauthorized access to the extraction tool.
 
 ### ✅ WhatsApp ChatBot Responder (CLI-based)
 - Search and open any group or personal chat.
@@ -82,7 +91,7 @@ pip install -r requirements.txt
 - Log in to [https://web.whatsapp.com](https://web.whatsapp.com) in Chrome.
 - Save your Chrome profile folder and use its path in the script.
 
-### 4. Run the Streamlit Member Extractor
+### 4. Run the Streamlit Member Extractor (with login system)
 ```bash
 streamlit run main.py
 ```
@@ -98,7 +107,7 @@ python text_reply_python/main.py
 
 ## 📸 Screenshots
 
-> *(Insert screenshots or GIFs of the interface and CLI below)*
+> *(Insert screenshots of login page, extraction interface, and chatbot CLI here)*
 
 ---
 
